@@ -1,0 +1,9 @@
+﻿type RuralAddress @model
+@key(name:"RuralAddressesByStateCity", fields:["stateCity"], queryField:"RuralAddressesByStateCity") {
+  id: ID!
+  latitude: String!
+  link: String!
+  longitude: String!
+  stateCity: String!
+  status: Int!
+}
