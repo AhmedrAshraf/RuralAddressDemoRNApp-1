@@ -8,7 +8,7 @@
 
 import React, {useState, useEffect} from 'react';
 
-import {View, Text, StyleSheet, FlatList, Alert, Button} from 'react-native';
+import {View, Text, StyleSheet, FlatList, Alert, Button, Platform} from 'react-native';
 
 // AWS Amplify imports and settings ---
 // import Amplify from '@aws-amplify/core';
@@ -88,7 +88,7 @@ const App = () => {
   };
 
   function showToast() {
-    ToastExample.show('Cool', ToastExample.SHORT);
+    ToastExample.show(`${Platform.OS} - ${Platform.Version}`, ToastExample.LONG);
   }
 
   return (
