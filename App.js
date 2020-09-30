@@ -8,7 +8,15 @@
 
 import React, {useState, useEffect} from 'react';
 
-import {View, Text, StyleSheet, FlatList, Alert, Button, Platform} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Alert,
+  Button,
+  Platform,
+} from 'react-native';
 
 // AWS Amplify imports and settings ---
 // import Amplify from '@aws-amplify/core';
@@ -19,6 +27,7 @@ import awsmobile from './aws-exports';
 // AWS Amplify imports and settings ---
 
 import ToastExample from './src/ToastExample';
+import OsmAndHelper from './src/OsmAndHelper';
 import ListItem from './components/ListItem';
 import SearchItem from './components/SearchItem';
 
@@ -40,6 +49,7 @@ const App = () => {
   }
 
   const [ruralAddresses, setRuralAddresses] = useState([]);
+  const [currRuralAddress, setCurrRuralAddress] = useState(undefined);
 
   /*useState(() => {
     const subscription = DataStore.observe().subscribe(console.log);
@@ -62,8 +72,10 @@ const App = () => {
 
   const searchItem = async (text) => {
     try {
+      const item = 'MT_VRA_1';
+      console.log('item', item);
       const result = await DataStore.query(RuralAddress, (m) =>
-        m.id('eq', text),
+        m.id('eq', item),
       );
 
       if (result === undefined) {
@@ -73,6 +85,8 @@ const App = () => {
 
       console.log('Item Found!', result[0]);
       Alert.alert('Item Found!', `Item ${result[0].id} - ${result[0].status}`);
+
+      setCurrRuralAddress(result[0]);
     } catch (error) {
       console.log(error);
     }
@@ -88,11 +102,27 @@ const App = () => {
   };
 
   function showToast() {
-    ToastExample.show(`${Platform.OS} - ${Platform.Version}`, ToastExample.LONG);
+    ToastExample.show(
+      `${Platform.OS} - ${Platform.Version}`,
+      ToastExample.LONG,
+    );
   }
+
+  const navigate = () => {
+    console.log('currRuralAddress', currRuralAddress);
+
+    // OsmAndHelper.doNothing();
+
+     OsmAndHelper.navigate(null,
+                               0, 0,
+                               "MT_VRA_1", +currRuralAddress.latitude, +currRuralAddress.longitude,
+                               "car", true);
+  };
 
   return (
     <View style={styles.container}>
+      <Button title="Navigate" onPress={() => navigate()} />
+      <Separator />
       <Button title="Load Sample NativeModule" onPress={() => showToast()} />
       <Separator />
       <SearchItem searchItem={searchItem} />
