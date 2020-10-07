@@ -16,6 +16,7 @@ import {
   Alert,
   Button,
   Platform,
+  Linking,
 } from 'react-native';
 
 // AWS Amplify imports and settings ---
@@ -52,10 +53,10 @@ const App = () => {
   const [currRuralAddress, setCurrRuralAddress] = useState(undefined);
 
   /*useState(() => {
-    const subscription = DataStore.observe().subscribe(console.log);
+        const subscription = DataStore.observe().subscribe(console.log);
 
-    return () => subscription.unsubscribe();
-  }, [])*/
+        return () => subscription.unsubscribe();
+      }, [])*/
 
   useEffect(() => {
     const subscription = DataStore.observe(RuralAddress).subscribe((msg) => {
@@ -72,10 +73,8 @@ const App = () => {
 
   const searchItem = async (text) => {
     try {
-      const item = 'MT_VRA_1';
-      console.log('item', item);
       const result = await DataStore.query(RuralAddress, (m) =>
-        m.id('eq', item),
+        m.id('eq', text),
       );
 
       if (result === undefined) {
@@ -93,7 +92,7 @@ const App = () => {
   };
 
   const loadDatabase = async () => {
-    const ruralAddressesFromDb = await DataStore.query(RuralAddress); //todo: sort
+    const ruralAddressesFromDb = await DataStore.query(RuralAddress);
 
     Alert.alert(
       'Items loaded',
@@ -101,29 +100,39 @@ const App = () => {
     );
   };
 
-  function showToast() {
-    ToastExample.show(
-      `${Platform.OS} - ${Platform.Version}`,
-      ToastExample.LONG,
-    );
-  }
-
-  const navigate = () => {
+  const navigate = async () => {
     console.log('currRuralAddress', currRuralAddress);
 
-    // OsmAndHelper.doNothing();
+    if (Platform.OS === 'android') {
+      OsmAndHelper.navigate(
+        null,
+        0,
+        0,
+        'MT_VRA_1',
+        +currRuralAddress.latitude,
+        +currRuralAddress.longitude,
+        'car',
+        true,
+      );
+    }
 
-     OsmAndHelper.navigate(null,
-                               0, 0,
-                               "MT_VRA_1", +currRuralAddress.latitude, +currRuralAddress.longitude,
-                               "car", true);
+    if (Platform.OS === 'iOS') {
+      const url =
+        'https://osmand.net/go.html?lat=-12.8107094167756&lon=-55.4035849612225&z=14';
+
+      const supported = await Linking.canOpenURL(url);
+
+      if (supported) {
+        await Linking.openURL(url);
+      } else {
+        Alert.alert(`Don't know how to open this URL: ${url}`);
+      }
+    }
   };
 
   return (
     <View style={styles.container}>
       <Button title="Navigate" onPress={() => navigate()} />
-      <Separator />
-      <Button title="Load Sample NativeModule" onPress={() => showToast()} />
       <Separator />
       <SearchItem searchItem={searchItem} />
       <Separator />
