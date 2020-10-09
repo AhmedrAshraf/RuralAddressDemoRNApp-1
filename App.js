@@ -72,7 +72,6 @@ const App = () => {
   });
 
   const searchItem = async (text) => {
-    text = 'MT_VRA_1';//TODO: remove it
     try {
       const result = await DataStore.query(RuralAddress, (m) =>
         m.id('eq', text),
