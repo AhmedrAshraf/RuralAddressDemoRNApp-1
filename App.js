@@ -72,6 +72,7 @@ const App = () => {
   });
 
   const searchItem = async (text) => {
+    text = 'MT_VRA_1';//TODO: remove it
     try {
       const result = await DataStore.query(RuralAddress, (m) =>
         m.id('eq', text),
@@ -100,8 +101,23 @@ const App = () => {
     );
   };
 
+  const navigateSample2 = async () => {
+    if (Platform.OS === 'ios') {
+      const url = 'osmandmaps://navigate?lat=-12.8107094167756&lon=-55.4035849612225z=8&dest_title=MT_VRA_1&profile=car&force=true';
+
+      const supported = await Linking.canOpenURL(url);
+
+      if (supported) {
+        await Linking.openURL(url);
+      } else {
+        Alert.alert(`Don't know how to open this URL: ${url}`);
+      }
+    }
+  }
+
   const navigate = async () => {
-    console.log('currRuralAddress', currRuralAddress);
+    // console.log('currRuralAddress', currRuralAddress);
+    console.log('plataform', Platform.OS);
 
     if (Platform.OS === 'android') {
       OsmAndHelper.navigate(
@@ -116,9 +132,12 @@ const App = () => {
       );
     }
 
-    if (Platform.OS === 'iOS') {
-      const url =
-        'https://osmand.net/go.html?lat=-12.8107094167756&lon=-55.4035849612225&z=14';
+    if (Platform.OS === 'ios') {
+      const url = 'osmandmaps://navigate?lat=-12.8107094167756&lon=-55.4035849612225z=14&dest=MT_VRA_1&profile=car&force=true';
+      /*
+      Hi, @nilsE. I have fixed the URL scheme. You can now use osmandmaps://?lat=45.6313&lon=34.9955&z=8&title=New+York to center the map with a context menu or 
+      osmandmaps://navigate?lat=45.6313&lon=34.9955&z=8&title=New+York to navigate to a given point.
+      */
 
       const supported = await Linking.canOpenURL(url);
 
@@ -133,6 +152,8 @@ const App = () => {
   return (
     <View style={styles.container}>
       <Button title="Navigate" onPress={() => navigate()} />
+      <Separator />
+      <Button title="Navigate 2" onPress={() => navigateSample2()} />
       <Separator />
       <SearchItem searchItem={searchItem} />
       <Separator />
