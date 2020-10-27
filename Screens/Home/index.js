@@ -12,8 +12,21 @@ import {Picker} from '@react-native-community/picker';
 import img6 from '../../assets/icons/06-sindicatos.png';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icons from 'react-native-vector-icons/FontAwesome5';
-import {StyleSheet, Linking, StatusBar, Share} from 'react-native';
+import {StyleSheet, Linking, StatusBar, Share, Platform} from 'react-native';
 import {View, Text, Image, TextInput, ScrollView, Alert} from 'react-native';
+
+// AWS Amplify imports and settings ---
+// import Amplify from '@aws-amplify/core';
+import Amplify from 'aws-amplify';
+import {DataStore, Predicates} from '@aws-amplify/datastore';
+import {RuralAddress} from '../../src/models';
+import awsmobile from '../../aws-exports';
+// AWS Amplify imports and settings ---
+
+import OsmAndHelper from '../../src/OsmAndHelper';
+
+Amplify.configure(awsmobile);
+let subscription;
 
 export default class Home extends React.Component {
   state = {
@@ -29,41 +42,101 @@ export default class Home extends React.Component {
       address: ['500', '400', '200'],
     },
     images: [img1, img2, img3, img4, img5, img6, img7, img8, img9],
+    ruralAddresses: [],
+    selectedRuralAddress: undefined,
   };
+
+  componentDidMount() {
+    const subscription = DataStore.observe(RuralAddress).subscribe((msg) => {
+      // console.log(JSON.stringify(msg.model), msg.opType, msg.element);
+      console.log(JSON.stringify(msg.element));
+
+      this.state.ruralAddresses = [...this.state.ruralAddresses, msg.element];
+
+      console.log('RuralAddress:', JSON.stringify(this.state.ruralAddresses));
+    });
+  }
 
   selectCity = (i) => this.setState({selectedCity: this.state.cities[i]});
 
-  findAddress = () => {
-    const {selectedCity, addressTxt} = this.state;
-    if (addressTxt !== '') {
-      let check = selectedCity.address.find((e) => e == addressTxt);
-      if (check) {
-        this.setState({address: true});
-      } else {
+  findAddress = async () => {
+    try {
+      const {selectedCity, addressTxt} = this.state;
+
+      if (addressTxt === '') {
         Alert.alert(
-          'Endereco Nao encontratdo',
-          'O endereco que voce buscou nao consta na nossa base de dados, por favor varifique se o endereco rural esta correto e lenle novamente',
-          [
-            {
-              text: 'Ok',
-              style: 'cancel',
-            },
-          ],
+          'Endereço inválido',
+          'O endereço deve ser preenchido',
+          [{text: 'Ok', style: 'cancel'}],
           {cancelable: false},
         );
       }
-    } else {
-      Alert.alert(
-        'Endereço inválido',
-        'O endereço deve ser preenchido',
-        [
-          {
-            text: 'Ok',
-            style: 'cancel',
-          },
-        ],
-        {cancelable: false},
+
+      const searchTerm = `MT_${selectedCity.key}_${addressTxt}`;
+
+      console.log('searchTerm', searchTerm);
+
+      const result = await DataStore.query(RuralAddress, (m) =>
+        m.id('eq', searchTerm),
       );
+
+      if (result === undefined) {
+        Alert.alert(
+          'Endereço não encontrado',
+          'O endereço que você buscou não consta na nossa base de dados, por favor verifique se o endereço rural está correto e tente novamente',
+          [{text: 'Ok', style: 'cancel'}],
+          {cancelable: false},
+        );
+        return;
+      }
+
+      console.log('Endereço Rural encontrado!', result);
+
+      this.setState({address: true, selectedRuralAddress: result[0]});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  navigate = async () => {
+    const {selectedRuralAddress} = this.state;
+
+    console.log('selectedRuralAddress', selectedRuralAddress);
+
+    // Note: I'm using MT_VRA_1 as a example, we need to use <STATE>_<CITY INITIALS (3 CHARS)>_<CODE>
+    // For now, our app works only on Mato Grosso State ("MT") and only the City named "Vera" has the coordinates, plus the City initials.
+    // To get the list of Cities from MT state call this API:
+    // https://e1mmosz1xb.execute-api.us-east-1.amazonaws.com/production/estados/13/cidades
+    // Header = Authorization:9c2d5ef0-fc50-11e7-9885-5f4f224882f3:aBcXvG5Z425EeSCIdwdsCOpoXR2XJuN8ltzhD9h6
+    // and get the body property of the results, notice that only "Vera" city will have a property named "sigla":"VRA"
+    // I'll fill all the cities with this properly in near future, but the app need to work righ now this way. You
+    // can use the City name (property "nome") from this API whenever the "sigla" property does not exists or null.
+
+    if (Platform.OS === 'android') {
+      OsmAndHelper.navigate(
+        null,
+        0,
+        0,
+        selectedRuralAddress.id,
+        +selectedRuralAddress.latitude,
+        +selectedRuralAddress.longitude,
+        'car',
+        true,
+      );
+    }
+
+    if (Platform.OS === 'ios') {
+      const url = `osmandmaps://navigate?lat=${+selectedRuralAddress.latitude}&lon=${+selectedRuralAddress.longitude}&z=4
+      &title=${selectedRuralAddress.id}&profile=car&force=true`;
+      // osmand ios app does not accept profile and force params yet, but does not throw error
+
+      const supported = await Linking.canOpenURL(url);
+
+      if (supported) {
+        await Linking.openURL(url);
+      } else {
+        Alert.alert(`Don't know how to open this URL: ${url}`);
+      }
     }
   };
 
@@ -95,7 +168,7 @@ export default class Home extends React.Component {
               onValueChange={(e, i) => this.selectCity(i)}>
               {cities.length &&
                 cities.map((e) => (
-                  <Picker.Item label={e.title} value={e.title} />
+                  <Picker.Item key={e.key} label={e.title} value={e.title} />
                 ))}
             </Picker>
           </View>
@@ -117,6 +190,7 @@ export default class Home extends React.Component {
         </View>
         <View style={styles.centerIcon}>
           <Icon
+            onPress={this.navigate}
             name="navigation"
             style={address ? styles.iconBlue : styles.icons}
           />

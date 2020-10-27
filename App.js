@@ -136,7 +136,7 @@ const App = () => {
         Alert.alert(`Don't know how to open this URL: ${url}`);
       }
     }
-  };'currRuralAddress.latitude'
+  };
 
   return (
     <View style={styles.container}>

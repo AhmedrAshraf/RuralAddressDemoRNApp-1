@@ -17,13 +17,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "link": {
-                    "name": "link",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "longitude": {
                     "name": "longitude",
                     "isArray": false,
@@ -68,5 +61,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "0d5a09203645d88911de9a04c05b6928"
+    "version": "8b57d3f7a0103a3a59ae0362ba1544c7"
 };
