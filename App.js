@@ -102,6 +102,14 @@ const App = () => {
 
   const navigate = async () => {
     console.log('currRuralAddress', currRuralAddress);
+    // Note: I'm using MT_VRA_1 as a example, we need to use <STATE>_<CITY INITIALS (3 CHARS)>_<CODE>
+    // For now, our app works only on Mato Grosso State ("MT") and only the City named "Vera" has the coordinates, plus the City initials.
+    // To get the list of Cities from MT state call this API:
+    // https://e1mmosz1xb.execute-api.us-east-1.amazonaws.com/production/estados/13/cidades
+    // Header = Authorization:9c2d5ef0-fc50-11e7-9885-5f4f224882f3:aBcXvG5Z425EeSCIdwdsCOpoXR2XJuN8ltzhD9h6
+    // and get the body property of the results, notice that only "Vera" city will have a property named "sigla":"VRA"
+    // I'll fill all the cities with this properly in near future, but the app need to work righ now this way. You
+    // can use the City name (property "nome") from this API whenever the "sigla" property does not exists or null.
 
     if (Platform.OS === 'android') {
       OsmAndHelper.navigate(
@@ -116,9 +124,9 @@ const App = () => {
       );
     }
 
-    if (Platform.OS === 'iOS') {
-      const url =
-        'https://osmand.net/go.html?lat=-12.8107094167756&lon=-55.4035849612225&z=14';
+    if (Platform.OS === 'ios') {
+      const url = `osmandmaps://navigate?lat=${+currRuralAddress.latitude}&lon=${+currRuralAddress.longitude}&z=4&title=MT_VRA_1&profile=car&force=true`;
+      // osmand ios app does not accept profile and force params yet, but does not throw error
 
       const supported = await Linking.canOpenURL(url);
 
@@ -128,7 +136,7 @@ const App = () => {
         Alert.alert(`Don't know how to open this URL: ${url}`);
       }
     }
-  };
+  };'currRuralAddress.latitude'
 
   return (
     <View style={styles.container}>
