@@ -20,9 +20,7 @@ const SearchItem = ({searchItem}) => {
         onChangeText={onChange}
       />
       <TouchableOpacity style={styles.btn} onPress={() => searchItem(text)}>
-        <Text style={styles.btnText}>
-          Search Item
-        </Text>
+        <Text style={styles.btnText}>Search Item</Text>
       </TouchableOpacity>
     </View>
   );

@@ -37,8 +37,9 @@ export default class Home extends React.Component {
     const {selectedCity, addressTxt} = this.state;
     if (addressTxt !== '') {
       let check = selectedCity.address.find((e) => e == addressTxt);
-      if (check) this.setState({address: true});
-      else {
+      if (check) {
+        this.setState({address: true});
+      } else {
         Alert.alert(
           'Endereco Nao encontratdo',
           'O endereco que voce buscou nao consta na nossa base de dados, por favor varifique se o endereco rural esta correto e lenle novamente',
@@ -248,7 +249,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     paddingLeft: 20,
     paddingBottom: 4,
-    marginBottom: 2,/*4 gray sponsor box, comment it*/
+    marginBottom: 2 /*4 gray sponsor box, comment it*/,
     fontWeight: 'bold',
     borderBottomWidth: 2,
     borderBottomColor: 'gainsboro',
