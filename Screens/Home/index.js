@@ -33,12 +33,17 @@ export default class Home extends React.Component {
     address: false,
     addressTxt: '',
     cities: [
-      {title: 'Vera-mt', key: 'VRA', address: ['500', '400', '200']},
+      {
+        title: 'Vera-mt',
+        key: 'VRA',
+        address: ['500', '400', '200'],
+      } /*Change the name to 'initials' and 'name', please. Plus, the 'address' property must not exists now*/,
+      ,
       {title: 'Abrantes', key: 'ABT', address: ['50', '140', '150']},
     ],
     selectedCity: {
-      key: 'VRA',
-      title: 'Vera-mt',
+      key: 'VRA' /*Change the name to 'initials', please*/,
+      title: 'Vera-mt' /*Change the name to 'name', please*/,
       address: ['500', '400', '200'],
     },
     images: [img1, img2, img3, img4, img5, img6, img7, img8, img9],
@@ -55,6 +60,14 @@ export default class Home extends React.Component {
 
       console.log('RuralAddress:', JSON.stringify(this.state.ruralAddresses));
     });
+
+    // To get the list of Cities from MT state call this API:
+    // https://e1mmosz1xb.execute-api.us-east-1.amazonaws.com/production/estados/13/cidades
+    // Header = Authorization:9c2d5ef0-fc50-11e7-9885-5f4f224882f3:aBcXvG5Z425EeSCIdwdsCOpoXR2XJuN8ltzhD9h6
+    // and get the body property of the results, notice that only "Vera" city will have a property named "sigla":"VRA"
+    // I'll fill all the cities with this properly in near future, but the app need to work righ now this way. You
+    // can use the first three City chars from property "nome" of this API whenever the "sigla" property does not exists or null.
+    // e.g. "CUiabá" -> use
   }
 
   selectCity = (i) => this.setState({selectedCity: this.state.cities[i]});
@@ -103,15 +116,6 @@ export default class Home extends React.Component {
 
     console.log('selectedRuralAddress', selectedRuralAddress);
 
-    // Note: I'm using MT_VRA_1 as a example, we need to use <STATE>_<CITY INITIALS (3 CHARS)>_<CODE>
-    // For now, our app works only on Mato Grosso State ("MT") and only the City named "Vera" has the coordinates, plus the City initials.
-    // To get the list of Cities from MT state call this API:
-    // https://e1mmosz1xb.execute-api.us-east-1.amazonaws.com/production/estados/13/cidades
-    // Header = Authorization:9c2d5ef0-fc50-11e7-9885-5f4f224882f3:aBcXvG5Z425EeSCIdwdsCOpoXR2XJuN8ltzhD9h6
-    // and get the body property of the results, notice that only "Vera" city will have a property named "sigla":"VRA"
-    // I'll fill all the cities with this properly in near future, but the app need to work righ now this way. You
-    // can use the City name (property "nome") from this API whenever the "sigla" property does not exists or null.
-
     if (Platform.OS === 'android') {
       OsmAndHelper.navigate(
         null,
@@ -138,6 +142,41 @@ export default class Home extends React.Component {
         Alert.alert(`Don't know how to open this URL: ${url}`);
       }
     }
+  };
+
+  // Copiar Coordenadas button (remove this comment later, please)
+  copyCoordinates = () => {
+    const {selectedRuralAddress} = this.state;
+
+    const content = `${selectedRuralAddress.latitude},${selectedRuralAddress.longitude}`;
+
+    //TODO: Copy using the native mobile copying mecanism ( I believe that react-native have something that already handles it)
+    //note: When the user clicks on this button we'll add the 'content' values to this "ctrl + c" value.
+  };
+
+  // Compartilhar endereco rural button (remove this comment later, please)
+  shareCoordinates = () => {
+    const {selectedRuralAddress} = this.state;
+
+    const webNavigatorUrl =
+      'http://enderecoruralmap.s3.amazonaws.com/index.html#18/'; //TODO: must comes from the AppConfig class as well.
+
+    const content = `${webNavigatorUrl}${selectedRuralAddress.latitude}/${selectedRuralAddress.longitude}`;
+
+    //TODO: Share using the native mobile share mecanism ( I believe that react-native have something that already handles it)
+  };
+
+  // WebMapa button (remove this comment later, please)
+  openWebMap = () => {
+    const {selectedRuralAddress} = this.state;
+
+    const webNavigatorUrl =
+      'http://enderecoruralmap.s3.amazonaws.com/index.html#18/'; //TODO: must comes from the AppConfig class as well.
+
+    const content = `${webNavigatorUrl}${selectedRuralAddress.latitude}/${selectedRuralAddress.longitude}`;
+
+    Linking.openURL(content);
+    //TODO: Must open this link in the browser of the app
   };
 
   render() {
