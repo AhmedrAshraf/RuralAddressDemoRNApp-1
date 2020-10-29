@@ -2,10 +2,9 @@ import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {RuralAddress} from '../src/models';
 import PropTypes from 'prop-types';
-import { ConsoleLogger } from '@aws-amplify/core';
+import {ConsoleLogger} from '@aws-amplify/core';
 
 const ListItem = ({item}) => {
-
   console.log('item: ', item);
 
   return (
