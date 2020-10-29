@@ -7,7 +7,6 @@ import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplif
 export declare class RuralAddress {
   readonly id: string;
   readonly latitude: string;
-  readonly link: string;
   readonly longitude: string;
   readonly stateCity: string;
   readonly status: number;
