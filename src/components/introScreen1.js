@@ -10,7 +10,7 @@ export default class Home extends React.Component {
         <Text style={styles.homeHead}>RURAL</Text>
         <Image style={styles.homeLogo} source={require('../assets/LOGO.png')} />
         <Text style={styles.homeSubHead}>Bem Vindo</Text>
-        <Text style={styles.homeDetail}>
+        <Text style={styles.darkGreenTxt}>
           Encontre o imovel rural de forma rapida e facil. Mas antes sera
           preciso fazer algumas configuracoes e aprender um pouco sobre a
           solucao Endereco Rural.

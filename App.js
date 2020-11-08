@@ -1,24 +1,14 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React, {useState, useEffect} from 'react';
-
 import {
   View,
-  Text,
-  StyleSheet,
-  FlatList,
   Alert,
   Button,
-  Platform,
   Linking,
+  Platform,
+  FlatList,
+  StyleSheet,
 } from 'react-native';
-
+// import awsmobile from '.';
 // AWS Amplify imports and settings ---
 // import Amplify from '@aws-amplify/core';
 import Amplify from 'aws-amplify';
@@ -27,10 +17,10 @@ import {RuralAddress} from './src/models';
 import awsmobile from './aws-exports';
 // AWS Amplify imports and settings ---
 
-import ToastExample from './src/ToastExample';
+// import ToastExample from './src/ToastExample';
 import OsmAndHelper from './src/OsmAndHelper';
-import ListItem from './components/ListItem';
-import SearchItem from './components/SearchItem';
+import ListItem from './src/components/ListItem';
+import SearchItem from './src/components/SearchItem';
 
 Amplify.configure(awsmobile);
 let subscription;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './introStyle';
-import {View, Text, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import tick from '../assets/tick.png';
+import {View, Text, TouchableOpacity, Image} from 'react-native';
 
 export default class Terms extends React.Component {
   state = {agree: false};
@@ -14,15 +14,15 @@ export default class Terms extends React.Component {
     return (
       <View style={{flex: 1}}>
         <View style={styles.slide}>
-          <Text style={styles.homeDetail}>Termos e condicoes de uso</Text>
-          <Text style={styles.homeDetail}>
+          <Text style={styles.agreeHeadTxt}>Termos e condicoes de uso</Text>
+          <Text style={styles.darkGreenTxt}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
             and scrambled it to make a type specimen book. It has survived not
             only five centuries,
           </Text>
-          <Text style={styles.homeDetail}>
+          <Text style={styles.darkGreenTxt}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
@@ -30,7 +30,20 @@ export default class Terms extends React.Component {
             only five centuries,
           </Text>
           <View style={styles.agreementRow}>
-            <Icon onPress={this.change} name={name} size={20} />
+            {agree ? (
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={this.change}
+                style={styles.checkBox1}>
+                <Image source={tick} style={styles.tick} />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={this.change}
+                style={styles.checkBox2}
+              />
+            )}
             <Text onPress={this.change} style={styles.agreeTxt}>
               Concordo com os termos e condicoes de uso
             </Text>
