@@ -6,14 +6,14 @@ export default class Home extends React.Component {
   render() {
     return (
       <View style={styles.slide}>
-        <Text style={styles.homeHead}>ENDERCO</Text>
+        <Text style={styles.homeHead}>ENDEREÇO</Text>
         <Text style={styles.homeHead}>RURAL</Text>
         <Image style={styles.homeLogo} source={require('../assets/LOGO.png')} />
         <Text style={styles.homeSubHead}>Bem Vindo</Text>
         <Text style={styles.darkGreenTxt}>
-          Encontre o imovel rural de forma rapida e facil. Mas antes sera
-          preciso fazer algumas configuracoes e aprender um pouco sobre a
-          solucao Endereco Rural.
+          Encontre o imóvel rural de forma rápida e fácil. Mas antes será
+          preciso fazer algumas configurações e aprender um pouco sobre a
+          solução Endereço Rural.
         </Text>
       </View>
     );

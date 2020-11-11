@@ -21,10 +21,10 @@ export default class Screen2 extends React.Component {
     return (
       <View style={styles.slide}>
         <Text style={styles.darkGreenTxt}>
-          O OsmaAnd Maps e um aplicativo de acesso livre, qure permite ao
-          usuario navegar ate o imovel rural mesmo sem internet. baixe o
-          aplicativo osmaAnd Maps antes de comecar a usar o Endereco Rural e
-          baixe a base rodaviaria de Mato Grosso conforme video.
+          O OsmaAnd Maps é um aplicativo de acesso livre, que permite ao
+          usuário navegar até o imóvel rural mesmo sem internet. baixe o
+          aplicativo OsmaAnd Maps antes de começar a usar o Endereço Rural e
+          baixe a base rodoviária de Mato Grosso conforme o vídeo.
         </Text>
         <Text style={styles.subHead}>Baixe o OsmaAnd:</Text>
         {Platform.OS === 'android' ? (
@@ -53,7 +53,7 @@ export default class Screen2 extends React.Component {
           </TouchableOpacity>
         )}
         <Text style={styles.subHead}>
-          Baixe a base rodoviaria de Mato Grosso{'\n'}no OmAnd conforme o video
+          Baixe a base rodoviária de Mato Grosso{'\n'}no OsmAnd conforme o vídeo
           a seguir:
         </Text>
         <TouchableOpacity

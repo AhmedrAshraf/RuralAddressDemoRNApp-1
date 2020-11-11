@@ -14,7 +14,7 @@ export default class Screen3 extends React.Component {
     return (
       <View style={styles.slide}>
         <Text style={styles.darkGreenTxt}>
-          Aprenda como buscar o endereco rural{'\n'}conforme o video a seguir:
+          Aprenda como buscar o endereço rural{'\n'}conforme o vídeo a seguir:
         </Text>
         <TouchableOpacity
           activeOpacity={0.8}
@@ -28,11 +28,11 @@ export default class Screen3 extends React.Component {
           <Text style={styles.boldTxt}>Video</Text>
         </TouchableOpacity>
         <Text style={styles.darkGreenTxt}>
-          O Endereco Rural e uma iniciativa da sociedade civil organizada para
-          tranzer cidadania as apessoas do compo, incorporando tecnologia para o
-          endercamento figital dos imoveis rurais dos municipios.
+          O Endereço Rural é uma iniciativa da sociedade civil organizada para
+          trazer cidadania as pessoas do campo, incorporando tecnologia para o
+          endereçamento digital dos imóveis rurais dos municípios.
         </Text>
-        <Text style={styles.darkGreenTxt}>Conheca mais sobre o Enderco Rural:</Text>
+        <Text style={styles.darkGreenTxt}>Conheça mais sobre o Endereço Rural:</Text>
         <Text
           style={styles.link}
           onPress={() => Linking.openURL(AppConfig.openWebLink)}>
