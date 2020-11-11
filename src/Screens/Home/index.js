@@ -69,15 +69,10 @@ export default class Home extends React.Component {
       .then((e) => {
         let cities = [];
         let data = JSON.parse(e.body);
-        cities.push({
-          estadoId: '13',
-          cidadeId: '84',
-          nome: 'testing',
-          sigla: 'VRA',
-        });
         for (let i = 0; i < data.length; i++) {
-          if (data[i].sigla) cities.push(data[i]);
-          else cities.push({...data[i], sigla: data[i].nome.slice(0, 3)});
+          if (data[i].sigla) {
+            cities.push(data[i]);
+          }
         }
         this.setState({cities});
       });
@@ -85,7 +80,7 @@ export default class Home extends React.Component {
 
   selectCity = (i) => {
     const {cities} = this.state;
-    this.setState({selectedCity: cities[i], addressTxt: cities[i].cidadeId});
+    this.setState({selectedCity: cities[i]});
   };
 
   findAddress = async () => {
@@ -110,7 +105,9 @@ export default class Home extends React.Component {
             [{text: 'Ok', style: 'cancel'}],
             {cancelable: false},
           );
-        } else this.setState({address: true, selectedRuralAddress: result[0]});
+        } else {
+          this.setState({address: true, selectedRuralAddress: result[0]});
+        }
       }
     } catch (error) {
       console.log(error);
@@ -126,8 +123,11 @@ export default class Home extends React.Component {
     if (Platform.OS === 'ios') {
       const url = `osmandmaps://navigate?lat=${+latitude}&lon=${+longitude}&z=4&title=${id}&profile=car&force=true`;
       const supported = await Linking.canOpenURL(url);
-      if (supported) await Linking.openURL(url);
-      else Alert.alert(`this URL is not supported: ${url}`);
+      if (supported) {
+        await Linking.openURL(url);
+      } else {
+        Alert.alert(`this URL is not supported: ${url}`);
+      }
     }
   };
 
@@ -135,8 +135,8 @@ export default class Home extends React.Component {
     let address = this.state.selectedRuralAddress;
     if (address) {
       Clipboard.setString(`${address.latitude},${address.longitude}`);
+      Alert.alert('', 'Coordenadas copiadas');
     }
-    alert('Address Copied To Clipboard');
   };
 
   shareCoordinates = () => {
@@ -168,7 +168,7 @@ export default class Home extends React.Component {
           </Text>
         </View>
         <View style={styles.inputBox}>
-          <Text style={styles.lable}>Buscar municipio</Text>
+          <Text style={styles.lable}>Buscar município</Text>
           <View style={styles.searchSection}>
             <Ico style={styles.searchIcon} name="ios-search" />
 
@@ -183,7 +183,7 @@ export default class Home extends React.Component {
                 ))}
             </Picker>
           </View>
-          <Text style={styles.lable}>Buscar endereco rural</Text>
+          <Text style={styles.lable}>Buscar endereço rural</Text>
           <View style={styles.row}>
             <View style={styles.searchSection}>
               <Ico style={styles.searchIcon} name="ios-search" />
@@ -192,7 +192,7 @@ export default class Home extends React.Component {
               )}
               <TextInput
                 value={addressTxt}
-                placeholder="Buscar endereco rural"
+                placeholder="Buscar endereço rural"
                 style={selectedCity ? styles.input : styles.input2}
                 onChangeText={(e) => this.setState({addressTxt: e})}
               />
@@ -223,7 +223,7 @@ export default class Home extends React.Component {
             onPress={address ? this.shareCoordinates : null}>
             <Ico name="paper-plane" style={ico} />
             <Text style={styles.bottomLable}>
-              Compartihar{'\n'}endereco rural
+              Compartihar{'\n'}endereço rural
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -258,6 +258,7 @@ const styles = StyleSheet.create({
   },
   headTxt: {
     padding: 20,
+    paddingBottom: 10,
     color: 'white',
     fontWeight: 'bold',
   },
@@ -355,8 +356,8 @@ const styles = StyleSheet.create({
     /*backgroundColor: '#EEEEEE'*/
   },
   logos: {
-    width: 120,
-    height: 120,
+    width: 100,
+    height: 100,
     marginVertical: 10,
     resizeMode: 'cover',
   },
