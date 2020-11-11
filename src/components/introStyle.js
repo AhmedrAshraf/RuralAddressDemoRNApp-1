@@ -1,18 +1,39 @@
+import colors from '../Utils/color';
 import {StyleSheet} from 'react-native';
+
 export default StyleSheet.create({
   slide: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#c6f4ec',
+    backgroundColor: colors.lightGreen,
+  },
+  checkBox1: {
+    width: 18,
+    height: 18,
+    borderWidth: 1,
+    borderRadius: 3,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: 'black',
+  },
+  tick: {
+    width: 18,
+    height: 18,
+  },
+  checkBox2: {
+    width: 18,
+    height: 18,
+    borderWidth: 2,
+    borderRadius: 3,
   },
   homeHead: {
     fontSize: 20,
-    color: 'green',
     fontWeight: 'bold',
+    color: colors.greenish,
   },
   homeSubHead: {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: 'bold',
   },
   subHead: {
@@ -25,8 +46,15 @@ export default StyleSheet.create({
     width: '93%',
     fontSize: 15,
     marginTop: 5,
-    color: 'green',
+    color: colors.green,
     textAlign: 'center',
+  },
+  darkGreenTxt: {
+    width: '93%',
+    fontSize: 15,
+    marginTop: 5,
+    textAlign: 'center',
+    color: colors.darkGreen,
   },
   homeLogo: {
     width: 200,
@@ -41,7 +69,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: 15,
-    backgroundColor: 'black',
+    backgroundColor: colors.black,
   },
   playStoreBut: {
     marginTop: 10,
@@ -50,15 +78,15 @@ export default StyleSheet.create({
     paddingVertical: 5,
     alignItems: 'center',
     flexDirection: 'row',
-    backgroundColor: 'black',
+    backgroundColor: colors.black,
   },
   boldTxt: {
     fontSize: 20,
-    color: 'white',
     fontWeight: 'bold',
+    color: colors.white,
   },
   whiteTxt: {
-    color: 'white',
+    color: colors.white,
   },
   play: {
     width: 40,
@@ -85,7 +113,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: 45,
-    backgroundColor: '#52c0fa',
+    backgroundColor: colors.skyBlue,
   },
   playVideoBut2: {
     marginTop: 10,
@@ -95,7 +123,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: 45,
-    backgroundColor: '#815dd4',
+    backgroundColor: colors.purple,
   },
   agreementRow: {
     marginVertical: 20,
@@ -107,37 +135,41 @@ export default StyleSheet.create({
     marginLeft: 5,
     fontWeight: 'bold',
   },
+  agreeHeadTxt: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   dot: {
     borderWidth: 1,
     borderColor: 'green',
-    backgroundColor: '#c6f4ec',
+    backgroundColor: colors.lightGreen,
   },
   dot1: {
-    backgroundColor: 'green',
+    backgroundColor: colors.green,
   },
   link: {
     fontSize: 15,
-    color: 'blue',
     marginTop: 10,
+    color: colors.blue,
   },
   next1: {
     marginTop: 10,
-    color: 'white',
     borderRadius: 5,
     paddingVertical: 5,
+    color: colors.white,
     paddingHorizontal: 50,
-    backgroundColor: 'silver',
+    backgroundColor: colors.silver,
   },
   next: {
     marginTop: 10,
-    color: 'white',
     borderRadius: 5,
     paddingVertical: 5,
+    color: colors.white,
     paddingHorizontal: 50,
-    backgroundColor: 'green',
+    backgroundColor: colors.green,
   },
   nexTxt: {
     fontSize: 18,
-    color: 'white',
+    color: colors.white,
   },
 });

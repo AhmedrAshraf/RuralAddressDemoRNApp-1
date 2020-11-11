@@ -1,8 +1,16 @@
 import React from 'react';
 import styles from './introStyle';
 // import Modal from 'react-native-modal';
+import AppConfig from '../Utils/AppConfig';
 // import VideoPlayer from 'react-native-video-controls';
-import {View, Text, Image, TouchableOpacity, Platform} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  Linking,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
 
 export default class Screen2 extends React.Component {
   state = {play: false};
@@ -12,7 +20,7 @@ export default class Screen2 extends React.Component {
   render() {
     return (
       <View style={styles.slide}>
-        <Text style={styles.homeDetail}>
+        <Text style={styles.darkGreenTxt}>
           O OsmaAnd Maps e um aplicativo de acesso livre, qure permite ao
           usuario navegar ate o imovel rural mesmo sem internet. baixe o
           aplicativo osmaAnd Maps antes de comecar a usar o Endereco Rural e
@@ -20,7 +28,10 @@ export default class Screen2 extends React.Component {
         </Text>
         <Text style={styles.subHead}>Baixe o OsmaAnd:</Text>
         {Platform.OS === 'android' ? (
-          <TouchableOpacity style={styles.playStoreBut}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.playStoreBut}
+            onPress={() => Linking.openURL(AppConfig.playStoreAppUrl)}>
             <Image
               style={styles.play}
               source={require('../assets/googleplay.png')}
@@ -29,7 +40,10 @@ export default class Screen2 extends React.Component {
             <Text style={styles.boldTxt}>Google Play</Text>
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity style={styles.appStoreBut}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.appStoreBut}
+            onPress={() => Linking.openURL(AppConfig.appStoreAppUrl)}>
             <Image
               style={styles.apple}
               source={require('../assets/apple.png')}
@@ -57,10 +71,7 @@ export default class Screen2 extends React.Component {
           onBackdropPress={this.toggleModal}
           onBackButtonPress={this.toggleModal}>
           <View style={{height: 400}}>
-            <VideoPlayer
-              navigator={this.toggleModal}
-              source={{uri: 'https://vjs.zencdn.net/v/oceans.mp4'}}
-            />
+            <VideoPlayer navigator={this.toggleModal} source={{uri: AppConfig.video1link}} />
           </View>
         </Modal> */}
       </View>
