@@ -43,7 +43,7 @@ export default class Screen2 extends React.Component {
           <TouchableOpacity
             activeOpacity={0.8}
             style={styles.appStoreBut}
-            onPress={() => Linking.openURL(AppConfig.appStoreAppUrl)}>
+            onPress={() => Linking.openURL(AppConfig.appleStoreAppUrl)}>
             <Image
               style={styles.apple}
               source={require('../assets/apple.png')}
