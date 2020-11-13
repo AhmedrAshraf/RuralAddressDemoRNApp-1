@@ -8,6 +8,13 @@ export default StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: colors.lightGreen,
   },
+  cross: {
+    width: 30,
+    zIndex: 5,
+    height: 30,
+    margin: 20,
+    alignSelf: "flex-end"
+  },
   checkBox1: {
     width: 18,
     height: 18,

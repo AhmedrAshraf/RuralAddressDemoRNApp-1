@@ -12,4 +12,12 @@ export default {
     'https://apps.apple.com/br/app/osmand-mapas-viajam-e-navegam/id934850257',
   playStoreAppUrl:
     'https://play.google.com/store/apps/details?id=net.osmand&hl=ptbr',
+  url1: 'http://www.acaoverde.org.br/',
+  url2: 'http://www.ampa.com.br/',
+  url3: 'http://www.acrimat.org.br/portal/',
+  url4: 'http://www.aprosoja.com.br/',
+  url5: 'http://www.sistemafamato.org.br/portal/sindicatos/',
+  url6: 'http://www.sistemafamato.org.br/portal/index.php/',
+  url7: 'http://www.cipem.org.br/',
+  url8: 'http://www.sicredi.com.br/site/home/',
 };

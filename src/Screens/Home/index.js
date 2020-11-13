@@ -6,6 +6,7 @@ import AppConfig from '../../Utils/AppConfig';
 import img1 from '../../assets/icons/acao.png';
 import img2 from '../../assets/icons/vera.png';
 import awsmobile from '../../Utils/aws-exports';
+import {DataStore} from '@aws-amplify/datastore';
 import img3 from '../../assets/icons/03-ampa.png';
 import img4 from '../../assets/icons/03-ampa.png';
 import img8 from '../../assets/icons/08-cipen.png';
@@ -18,7 +19,6 @@ import img6 from '../../assets/icons/06-sindicatos.png';
 import Clipboard from '@react-native-community/clipboard';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icons from 'react-native-vector-icons/FontAwesome5';
-import {DataStore, Predicates} from '@aws-amplify/datastore';
 import {
   View,
   Text,
@@ -44,15 +44,15 @@ export default class Home extends React.Component {
     ruralAddresses: [],
     selectedRuralAddress: undefined,
     images: [
-      {logo: img1, url: 'http://www.acaoverde.org.br/'},
-      {logo: img2, url: 'https://www.vera.mt.gov.br/'},
-      {logo: img3, url: 'https://ampa.com.br/'},
-      {logo: img4, url: 'https://acrimat.org.br/portal/'},
-      {logo: img5, url: 'http://www.aprosoja.com.br/'},
-      {logo: img6, url: 'https://sistemafamato.org.br/portal/sindicatos/'},
-      {logo: img7, url: 'https://sistemafamato.org.br/portal/index.php'},
-      {logo: img8, url: 'https://cipem.org.br/'},
-      {logo: img9, url: 'https://www.sicredi.com.br/site/home'},
+      {logo: img1, url: AppConfig.url1},
+      {logo: img2, url: AppConfig.url2},
+      {logo: img3, url: AppConfig.url3},
+      {logo: img4, url: AppConfig.url4},
+      {logo: img5, url: AppConfig.url5},
+      {logo: img6, url: AppConfig.url6},
+      {logo: img7, url: AppConfig.url7},
+      {logo: img8, url: AppConfig.url8},
+      {logo: img9, url: AppConfig.url9},
     ],
   };
 
@@ -171,15 +171,14 @@ export default class Home extends React.Component {
           <Text style={styles.lable}>Buscar município</Text>
           <View style={styles.searchSection}>
             <Ico style={styles.searchIcon} name="ios-search" />
-
             <Picker
               style={styles.input1}
               placeholder="Buscar municipio"
               onValueChange={(e, i) => this.selectCity(i)}
               selectedValue={selectedCity && selectedCity.nome}>
               {!!cities.length &&
-                cities.map((e) => (
-                  <Picker.Item label={e.nome} value={e.nome} />
+                cities.map((e, i) => (
+                  <Picker.Item key={i} label={e.nome} value={e.nome} />
                 ))}
             </Picker>
           </View>
@@ -239,7 +238,7 @@ export default class Home extends React.Component {
           <View style={styles.sponsersBox}>
             {images.map((e, i) => (
               <TouchableOpacity key={i} onPress={() => Linking.openURL(e.url)}>
-                <Image key={i} source={e.logo} style={styles.logos} />
+                <Image source={e.logo} style={styles.logos} />
               </TouchableOpacity>
             ))}
           </View>
