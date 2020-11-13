@@ -6,6 +6,7 @@
         "android": "react-native run-android",
         "ios": "react-native run-ios",
         "start": "react-native start",
+        "release-android": "cd android && gradlew assembleRelease",
         "test": "jest",
         "lint": "eslint .",
         "amplify-modelgen": "node amplify\\scripts\\amplify-modelgen.js",
