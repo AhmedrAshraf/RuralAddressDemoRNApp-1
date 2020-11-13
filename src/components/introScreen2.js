@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './introStyle';
-// import Modal from 'react-native-modal';
+import Modal from 'react-native-modal';
 import AppConfig from '../Utils/AppConfig';
-// import VideoPlayer from 'react-native-video-controls';
+import VideoPlayer from 'react-native-video-controls';
 import {
   View,
   Text,
@@ -21,10 +21,10 @@ export default class Screen2 extends React.Component {
     return (
       <View style={styles.slide}>
         <Text style={styles.darkGreenTxt}>
-          O OsmaAnd Maps é um aplicativo de acesso livre, que permite ao
-          usuário navegar até o imóvel rural mesmo sem internet. baixe o
-          aplicativo OsmaAnd Maps antes de começar a usar o Endereço Rural e
-          baixe a base rodoviária de Mato Grosso conforme o vídeo.
+          O OsmaAnd Maps é um aplicativo de acesso livre, que permite ao usuário
+          navegar até o imóvel rural mesmo sem internet. baixe o aplicativo
+          OsmaAnd Maps antes de começar a usar o Endereço Rural e baixe a base
+          rodoviária de Mato Grosso conforme o vídeo.
         </Text>
         <Text style={styles.subHead}>Baixe o OsmaAnd:</Text>
         {Platform.OS === 'android' ? (
@@ -66,14 +66,17 @@ export default class Screen2 extends React.Component {
           <Text style={styles.whiteTxt}>veja o </Text>
           <Text style={styles.boldTxt}>Video</Text>
         </TouchableOpacity>
-        {/* <Modal
+        <Modal
           isVisible={this.state.play}
           onBackdropPress={this.toggleModal}
           onBackButtonPress={this.toggleModal}>
           <View style={{height: 400}}>
-            <VideoPlayer navigator={this.toggleModal} source={{uri: AppConfig.video1link}} />
+            <VideoPlayer
+              navigator={this.toggleModal}
+              source={{uri: AppConfig.video1link}}
+            />
           </View>
-        </Modal> */}
+        </Modal>
       </View>
     );
   }

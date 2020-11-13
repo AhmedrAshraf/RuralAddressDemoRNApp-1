@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './introStyle';
 import AppConfig from '../Utils/AppConfig';
-// import Modal from 'react-native-modal';
-// import VideoPlayer from 'react-native-video-controls';
+import Modal from 'react-native-modal';
+import VideoPlayer from 'react-native-video-controls';
 import {View, Text, Image, TouchableOpacity, Linking} from 'react-native';
 
 export default class Screen3 extends React.Component {
@@ -32,20 +32,25 @@ export default class Screen3 extends React.Component {
           trazer cidadania as pessoas do campo, incorporando tecnologia para o
           endereçamento digital dos imóveis rurais dos municípios.
         </Text>
-        <Text style={styles.darkGreenTxt}>Conheça mais sobre o Endereço Rural:</Text>
+        <Text style={styles.darkGreenTxt}>
+          Conheça mais sobre o Endereço Rural:
+        </Text>
         <Text
           style={styles.link}
           onPress={() => Linking.openURL(AppConfig.openWebLink)}>
           www.enderecorural.com
         </Text>
-        {/* <Modal
+        <Modal
           isVisible={this.state.play}
           onBackdropPress={this.toggleModal}
           onBackButtonPress={this.toggleModal}>
           <View style={{height: 400}}>
-            <VideoPlayer navigator={this.toggleModal} source={{uri: AppConfig.video1link}} />
+            <VideoPlayer
+              navigator={this.toggleModal}
+              source={{uri: AppConfig.video1link}}
+            />
           </View>
-        </Modal> */}
+        </Modal>
       </View>
     );
   }
